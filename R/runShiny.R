@@ -10,8 +10,23 @@
 #' 1
 #' # runShiny()
 
-runShiny <- function(maxFileSize = 100*1024^2, figureFolder = "~") {
+runShiny <- function(maxFileSize = 100*1024^2, figureFolder = getwd()) {
   # find and launch the app
+  
+  s <- Sys.info()[["sysname"]]
+  absPath <- FALSE
+  if (s == "Windows") {
+    substr(figureFolder, 1, 2) %in% paste0(LETTERS, ":")
+    absPath <- TRUE
+  } else {
+    substr(figureFolder, 1, 1) %in% c("/", "~")
+    absPath <- TRUE
+  }
+  
+  if (!absPath) {
+    stop("figureFolder need an ABSOLUTE path!")
+  }
+  
   options(shiny.maxRequestSize=maxFileSize)
   assign(".__proturn.shiny.var__", new.env(), envir = globalenv())
   .__proturn.shiny.var__$path <- figureFolder

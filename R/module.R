@@ -149,7 +149,9 @@ fmod <- function(input, output, session, x, tcc = reactive(Inf), f, time, type, 
     withProgress(message = "making plots", value = 0, {
       unif <- unique(r()$mat[, 1])
       n <- length(unif)
-      dir <- file.path(resultPath, gsub("-| |:|", "", Sys.time()))
+      if (!dir.exists(resultPath))
+        dir.create(resultPath)
+      dir <- file.path(resultPath, paste0("PROTURN", gsub("-| |:|", "", Sys.time())))
       if (!dir.exists(dir))
         dir.create(dir)
 

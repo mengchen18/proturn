@@ -4,7 +4,7 @@
 \alias{runShiny}
 \title{Lanch shiny application for protein degradation/synthesis curve fitting}
 \usage{
-runShiny(maxFileSize = 100 * 1024^2, figureFolder = "~")
+runShiny(maxFileSize = 100 * 1024^2, figureFolder = getwd())
 }
 \arguments{
 \item{maxFileSize}{max size of files can be uploaded}

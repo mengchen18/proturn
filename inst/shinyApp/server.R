@@ -182,14 +182,15 @@ server <- function(input, output, session) {
     req(deg())
     req(syn())
     callModule(proturn:::combView, "CMB", deg = deg, syn = syn,
-               deg.ratio = reactive(as.matrix(degRatio(), rownames.force = TRUE)),
-               syn.ratio = reactive(as.matrix(synRatio(), rownames.force = TRUE)),
-               syn.t = timePointsSyn, deg.t = timePointsDeg,
-               tcc = reactive(as.numeric(input$tcc)))
+               deg.ratio = modinputDeg,
+               syn.ratio = modinputSyn,
+               syn.t = modinputSynTime, deg.t = modinputDegTime,
+               tcc = modinputTcc)
   })
   
   session$onSessionEnded(function() {
-    rm(.__proturn.shiny.var__)
+    if (exists(".__proturn.shiny.var__", globalenv()))
+      rm(.__proturn.shiny.var__, envir = globalenv())
   })
 }
 
