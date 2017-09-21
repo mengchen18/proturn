@@ -201,7 +201,7 @@ fmodUI <- function(id) {
       column(6,
              wellPanel(
                fixedRow(
-                 column(6, tags$b("Combined fitting")),
+                 column(6, tags$b("Collapsed fitting")),
                  tags$head(
                    tags$style("label {display:inline;}")
                  ),
@@ -358,7 +358,7 @@ combViewUI <- function(id) {
       ),
       column(6,
              wellPanel(
-               tags$b("Combined fitting"),
+               tags$b("Collapsed fitting"),
                # column(6, selectizeInput(ns("outlier"), "outlier", choices=NULL, multiple=TRUE,
                #                          options = list(placeholder = 'Select outlier to exclude ...'))),
                plotOutput(ns("figComb"))

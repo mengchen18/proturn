@@ -88,26 +88,38 @@ fitNLSModels <- function(x, f, t, tcc=Inf, type = c("deg", "syn"),
     names(par.lower)[names(par.lower) == "k"] <- "ks"
     names(par.upper)[names(par.upper) == "k"] <- "ks"
   }
-
+  
   if (is.null(rownames(x)))
     rownames(x) <- paste("X", 1:nrow(x), sep = "")
   type <- match.arg(type[1], choices = c("deg", "syn"))
   fun <- switch (type,
                  "deg" = fitDegNLS,
                  "syn" = fitSynNLS)
-
+  
   diffB <- length(B) == nrow(x) && !is.null(B)
   diffA <- length(A) == nrow(x) && !is.null(A)
-
+  
   ll <- mclapply(unique(f), function(item) {
     i <- f == item
     m <- x[i, , drop = FALSE]
-
+    
     bb <- B[1]
     aa <- A[1]
-    if (diffB) bb <- B[i]
-    if (diffA) aa <- A[i]
-
+    if (diffB) {
+      bb <- B[i] 
+      if (is.na(bb) || !is.numeric(bb)) {
+        bb <- NULL
+        cat("NA is given to B, use NULL instead.\n")
+      } 
+    }
+    if (diffA) {
+      aa <- A[i]
+      if (is.na(aa) || !is.numeric(aa)) {
+        aa <- NULL
+        cat("NA is given to A, use NULL instead.\n")
+      }
+    }
+    
     fun(x = m, t = t, tcc=tcc, A = aa, B = bb,
         par.init = par.init,
         par.lower = par.lower,
@@ -120,7 +132,7 @@ fitNLSModels <- function(x, f, t, tcc=Inf, type = c("deg", "syn"),
   fit.mat <- do.call(rbind, lapply(ll, attr, "individual"))
   fit.mat <- fit.mat[rownames(x), ]
   fit.mat <- cbind(f, fit.mat)
-
+  
   type <- "individual"
   comb.fit <- max(table(f)) > 1
   if (comb.fit) {
@@ -137,11 +149,11 @@ fitNLSModels <- function(x, f, t, tcc=Inf, type = c("deg", "syn"),
     fit.mat <- cbind(fit.mat, comb.fit.mat)
     type <- "combined"
   }
-
+  
   fit.mat <- data.frame(fit.mat, stringsAsFactors = FALSE)
   fit.mat[-1] <- lapply(fit.mat[-1], as.numeric)
   colnames(fit.mat)[1] <- "collapsed.factor"
-
+  
   list(mat = fit.mat, list = ll, type = type)
 }
 
