@@ -15,7 +15,8 @@ runShiny <- function(maxFileSize = 100*1024^2, figureFolder = "~") {
   options(shiny.maxRequestSize=maxFileSize)
   .__shiny.var__ <- environment()
   .__shiny.var__$path <- figureFolder
-  appDir <- system.file("shinyApp", package = "proturn")
+  # appDir <- system.file("shinyApp", package = "proturn")
+  appDir <- "proturn/inst/shinyApp/"
   shiny::runApp(appDir, display.mode = "normal")
 }
 

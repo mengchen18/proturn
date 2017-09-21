@@ -23,6 +23,7 @@
 #' @param pre.col a reactive object containing a data.frame, for the annotation columns
 #' @param ncore a reactive object, passed to fitNLSModels
 #' @param resultPath where the figures to be saved
+#' @param listener listener
 #' @return a reactive value
 #'   reactive( list(pre.col = pre.col(), mat = r()$mat, list = r()$list, type = r()$type) )
 #' @import shiny shinyBS 
@@ -33,17 +34,17 @@
 
 
 fmod <- function(input, output, session, x, tcc = reactive(Inf), f, time, type, A, B,
-                 par.init, par.lower, par.upper, pre.col, ncore, resultPath) {
+                 par.init, par.lower, par.upper, pre.col, ncore, resultPath, listener) {
 
-  r <- reactive({
+  r <- eventReactive(listener, {
     fitNLSModels(x = x(), f = f(), t = time(), type = type(),
                  A = A(), B = B(), tcc = tcc(),
                  par.init = par.init(), par.lower = par.lower(),
                  par.upper = par.upper(), ncore = ncore())
   })
 
-  k <- reactive( ifelse(type() == "syn", "ks", "kd") )
-  ot <- reactive({ cbind(pre.col(), sigDF(r()$mat)) })
+  k <- eventReactive(listener, ifelse(type() == "syn", "ks", "kd") )
+  ot <- eventReactive(listener, { cbind(pre.col(), sigDF(r()$mat)) })
 
   output$tab <- DT::renderDataTable({
     DT::datatable(ot(), filter = "bottom", class = list("nowrap"),
@@ -146,7 +147,7 @@ fmod <- function(input, output, session, x, tcc = reactive(Inf), f, time, type, 
 
   observeEvent(input$save2folder, {
     withProgress(message = "making plot", value = 0, {
-      unif <- unique(r()$mat[, "f"])
+      unif <- unique(r()$mat[, 1])
       n <- length(unif)
       dir <- file.path(resultPath, gsub("-| |:|", "", Sys.time()))
       if (!dir.exists(dir))
@@ -213,9 +214,9 @@ fmodUI <- function(id) {
       )
     ),
     fixedRow(
-      column(2, downloadButton(ns("downloadData"), "Download Table")),
-      column(3, downloadButton(ns("downloadFigures"), "Download Current Figures")),
-      column(3, actionButton(ns("save2folder"), "Save All Comb Figures", icon = icon("download")))
+      column(2, downloadButton(ns("downloadData"), "Download table")),
+      column(3, downloadButton(ns("downloadFigures"), "Download current figures")),
+      column(3, actionButton(ns("save2folder"), "Save all figures", icon = icon("download")))
       # column(3, shinyDirButton(ns("save2folder"), "Save all fig to folder", "Select a folder"))
 
     )

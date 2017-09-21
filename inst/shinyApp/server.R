@@ -1,5 +1,6 @@
 server <- function(input, output, session) {
-  figureFolder = get("path", .__shiny.var__)
+  # figureFolder = get("path", .__shiny.var__)
+  figureFolder = "/media/msdata5/users_files/Chen/Projects/ProteinTurnOverRate/"
   # ============== Update inputs ===================
   dataInput <- reactive({
     req(input$file)
@@ -116,6 +117,7 @@ server <- function(input, output, session) {
                           par.upper = reactive(up),
                           pre.col = pre.col,
                           ncore = reactive(input$ncore), 
+                          listener = input$go,
                           resultPath = figureFolder)
   })
 
@@ -142,6 +144,7 @@ server <- function(input, output, session) {
                           par.upper = reactive(up),
                           pre.col = pre.col,
                           ncore = reactive(input$ncore),
+                          listener = input$go,
                           resultPath = figureFolder)
   })
 
