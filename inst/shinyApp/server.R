@@ -1,6 +1,5 @@
 server <- function(input, output, session) {
-  # figureFolder = get("path", .__shiny.var__)
-  figureFolder = "/media/msdata5/users_files/Chen/Projects/ProteinTurnOverRate/"
+  figureFolder <- get("path", .__proturn.shiny.var__)
   
   # ============== Update inputs ===================
   
@@ -189,7 +188,9 @@ server <- function(input, output, session) {
                tcc = reactive(as.numeric(input$tcc)))
   })
   
-  
+  session$onSessionEnded(function() {
+    rm(.__proturn.shiny.var__)
+  })
 }
 
 
