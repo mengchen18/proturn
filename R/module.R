@@ -23,7 +23,6 @@
 #' @param pre.col a reactive object containing a data.frame, for the annotation columns
 #' @param ncore a reactive object, passed to fitNLSModels
 #' @param resultPath where the figures to be saved
-#' @param listener listener
 #' @return a reactive value
 #'   reactive( list(pre.col = pre.col(), mat = r()$mat, list = r()$list, type = r()$type) )
 #' @import shiny shinyBS 
@@ -34,17 +33,17 @@
 
 
 fmod <- function(input, output, session, x, tcc = reactive(Inf), f, time, type, A, B,
-                 par.init, par.lower, par.upper, pre.col, ncore, resultPath, listener) {
+                 par.init, par.lower, par.upper, pre.col, ncore, resultPath) {
 
-  r <- eventReactive(listener, {
+  r <- reactive({
     fitNLSModels(x = x(), f = f(), t = time(), type = type(),
                  A = A(), B = B(), tcc = tcc(),
                  par.init = par.init(), par.lower = par.lower(),
                  par.upper = par.upper(), ncore = ncore())
   })
 
-  k <- eventReactive(listener, ifelse(type() == "syn", "ks", "kd") )
-  ot <- eventReactive(listener, { cbind(pre.col(), sigDF(r()$mat)) })
+  k <- reactive(ifelse(type() == "syn", "ks", "kd") )
+  ot <- reactive( cbind(pre.col(), sigDF(r()$mat)) )
 
   output$tab <- DT::renderDataTable({
     DT::datatable(ot(), filter = "bottom", class = list("nowrap"),

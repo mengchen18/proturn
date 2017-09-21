@@ -9,7 +9,7 @@ server <- function(input, output, session) {
     headerNum <- header[sapply(data, is.numeric)]
     list(data=data, header=header, headerNum=headerNum)
   })
-
+  
   # update
   observe( updateSelectizeInput(session, "id.col", choices = dataInput()$header, selected = dataInput()$header[1],
                                 options = list(placeholder = 'Select a column ...')))
@@ -26,7 +26,7 @@ server <- function(input, output, session) {
                                 options = list(placeholder = 'Select columns ...')))
   observe( updateSelectizeInput(session, "B.col.syn", choices = dataInput()$headerNum, selected = "",
                                 options = list(placeholder = 'Select a column ...')))
-
+  
   observe({
     if (length(timePointsDeg()) == length(input$deg.col))
       updateCollapse(session, "fit.deg.param",
@@ -45,10 +45,10 @@ server <- function(input, output, session) {
                                                    style = list("Basic settings" = "default",
                                                                 "Advanced settings" = "default"))
   })
-
-
+  
+  
   # ==================== intermediate calculation =====================
-
+  
   timePointsSyn <- reactive({
     req(input$timePointsSyn)
     as.numeric(strsplit(input$timePointsSyn, ',')[[1]])
@@ -69,7 +69,7 @@ server <- function(input, output, session) {
     rownames(x) <- dataInput()$data[, input$id.col]
     x
   })
-
+  
   fac <- reactive({
     if (is.null(input$collapse.col) || input$collapse.col == "") {
       if (is.null(input$id.col) || input$id.col == "")
@@ -80,7 +80,7 @@ server <- function(input, output, session) {
     }
     r
   })
-
+  
   pre.col <- reactive({
     if (is.null(input$export.col) || input$export.col == "") {
       if (!is.null(rownames(dataInput()$data)))
@@ -89,75 +89,8 @@ server <- function(input, output, session) {
     r <- dataInput()$data[, input$export.col, drop = FALSE]
     r
   })
-
+  
   ### ===================== output ======================
-
-  res <- reactiveValues(deg = NULL, syn = NULL)
-  observeEvent(input$go, {
-    B <- NULL
-    if (input$B.col != "")
-      B <- dataInput()$data[, input$B.col]
-
-    init <- list(A = input$deg.Ainit,
-                 B = input$deg.Binit,
-                 kd = input$deg.kdinit)
-    low <- c(A = input$deg.Arange[1],
-             B = input$deg.Brange[1],
-             kd = input$deg.kdrange[1])
-    up <- c(A = input$deg.Arange[2],
-            B = input$deg.Brange[2],
-            kd = input$deg.kdrange[2])
-    
-    res$deg <- callModule(proturn:::fmod, "DEG", x = reactive(as.matrix(degRatio(), rownames.force = TRUE)),
-                          f = fac, time = timePointsDeg, type = reactive("deg"),
-                          tcc = reactive(as.numeric(input$tcc)),
-                          A = reactive(NULL), B = reactive(B),
-                          par.init = reactive(init),
-                          par.lower = reactive(low),
-                          par.upper = reactive(up),
-                          pre.col = pre.col,
-                          ncore = reactive(input$ncore), 
-                          listener = input$go,
-                          resultPath = figureFolder)
-  })
-
-  observeEvent(input$go, {
-    B <- NULL
-    if (input$B.col.syn != "")
-      B <- dataInput()$data[, input$B.col.syn]
-
-    init <- list(A = input$syn.Ainit,
-                 B = input$syn.Binit,
-                 ks = input$syn.kdinit)
-    low <- c(A = input$syn.Arange[1],
-             B = input$syn.Brange[1],
-             ks = input$syn.kdrange[1])
-    up <- c(A = input$syn.Arange[2],
-            B = input$syn.Brange[2],
-            ks = input$syn.kdrange[2])
-    res$syn <- callModule(proturn:::fmod, "SYN", x = reactive(as.matrix(synRatio(), rownames.force = TRUE)),
-                          f = fac, time = timePointsSyn, type = reactive("syn"),
-                          tcc = reactive(as.numeric(input$tcc)),
-                          A = reactive(NULL), B = reactive(B),
-                          par.init = reactive(init),
-                          par.lower = reactive(low),
-                          par.upper = reactive(up),
-                          pre.col = pre.col,
-                          ncore = reactive(input$ncore),
-                          listener = input$go,
-                          resultPath = figureFolder)
-  })
-
-  observeEvent(input$go, {
-    req(res$deg)
-    req(res$syn)
-    callModule(proturn:::combView, "CMB", deg = res$deg, syn = res$syn,
-               deg.ratio = reactive(as.matrix(degRatio(), rownames.force = TRUE)),
-               syn.ratio = reactive(as.matrix(synRatio(), rownames.force = TRUE)),
-               syn.t = timePointsSyn, deg.t = timePointsDeg,
-               tcc = reactive(as.numeric(input$tcc)))
-  })
-
   output$dt.degRatio <- DT::renderDataTable({
     DT::datatable(sigDF(degRatio()), filter = "bottom", selection = "single", 
                   options = list(scrollX = TRUE), caption = "Degradation ratios")
@@ -167,6 +100,85 @@ server <- function(input, output, session) {
     DT::datatable(sigDF(synRatio()), filter = "bottom", selection = "single", 
                   options = list(scrollX = TRUE), caption = "Synthesis ratios")
   })
+  
+  
+  ###
+  modinputf <- eventReactive(input$go, fac())
+  modinputTcc <- eventReactive(input$go, as.numeric(input$tcc))
+  modinputNcore <- eventReactive(input$go, input$ncore)
+  
+  ###################### degradation #####################
+  modinputDeg <- eventReactive(input$go, as.matrix(degRatio(), rownames.force = TRUE))
+  modinputDegTime <- eventReactive(input$go, timePointsDeg())
+  modinputDegB <- eventReactive(input$go, {
+    B <- NULL
+    if (input$B.col != "")
+      B <- dataInput()$data[, input$B.col]
+    B
+  })
+  modinputDegInit <- eventReactive(input$go, {
+    list(A = input$deg.Ainit, B = input$deg.Binit, kd = input$deg.kdinit)
+  })
+  modinputDegLow <- eventReactive(input$go, {
+    c(A = input$deg.Arange[1], B = input$deg.Brange[1], kd = input$deg.kdrange[1])
+  })
+  modinputDegUp <- eventReactive(input$go, {
+    c(A = input$deg.Arange[2], B = input$deg.Brange[2], kd = input$deg.kdrange[2])
+  })
+  deg <- callModule(proturn:::fmod, "DEG", 
+                        x = modinputDeg, time = modinputDegTime,
+                        f = modinputf, type = reactive("deg"),
+                        tcc = modinputTcc,
+                        A = reactive(NULL), B = modinputDegB,
+                        par.init = modinputDegInit,
+                        par.lower = modinputDegLow,
+                        par.upper = modinputDegUp,
+                        pre.col = pre.col,
+                        ncore = modinputNcore, 
+                        resultPath = figureFolder)
+  
+  ###################### synthesis #####################
+  modinputSyn <- eventReactive(input$go, as.matrix(synRatio(), rownames.force = TRUE))
+  modinputSynTime <- eventReactive(input$go, timePointsSyn())
+  modinputSynB <- eventReactive(input$go, {
+    B <- NULL
+    if (input$B.col.syn != "")
+      B <- dataInput()$data[, input$B.col.syn]
+    B
+  })
+  modinputSynInit <- eventReactive(input$go, {
+    list(A = input$syn.Ainit, B = input$syn.Binit, ks = input$syn.kdinit)
+  })
+  modinputSynLow <- eventReactive(input$go, {
+    c(A = input$syn.Arange[1], B = input$syn.Brange[1], ks = input$syn.kdrange[1])
+  })
+  modinputSynUp <- eventReactive(input$go, {
+    c(A = input$syn.Arange[2], B = input$syn.Brange[2], ks = input$syn.kdrange[2])
+  })
+  
+  syn <- callModule(proturn:::fmod, "SYN", f = modinputf, 
+                    x = modinputSyn, time = modinputSynTime, 
+                    type = reactive("syn"),
+                    tcc = modinputTcc,
+                    A = reactive(NULL), B = modinputSynB,
+                    par.init = modinputSynInit,
+                    par.lower = modinputSynLow,
+                    par.upper = modinputSynUp,
+                    pre.col = pre.col,
+                    ncore = modinputNcore,
+                    resultPath = figureFolder)
+  ###################### degradation #####################
+  observeEvent(input$go, {
+    req(deg())
+    req(syn())
+    callModule(proturn:::combView, "CMB", deg = deg, syn = syn,
+               deg.ratio = reactive(as.matrix(degRatio(), rownames.force = TRUE)),
+               syn.ratio = reactive(as.matrix(synRatio(), rownames.force = TRUE)),
+               syn.t = timePointsSyn, deg.t = timePointsDeg,
+               tcc = reactive(as.numeric(input$tcc)))
+  })
+  
+  
 }
 
 
