@@ -74,14 +74,14 @@ refitwoOutlier <- function(x, include, t, tcc,
 
   if (attr(x, "type") == "Degradation") {
     func <- fitDegNLS
-    names(par.init) <- gsub("k", "kd", names(par.init))
-    names(par.lower) <- gsub("k", "kd", names(par.lower))
-    names(par.upper) <- gsub("k", "kd", names(par.upper))
+    names(par.init)[names(par.init) == "k"] <- "kd"
+    names(par.lower)[names(par.lower) == "k"] <- "kd"
+    names(par.upper)[names(par.upper) == "k"] <- "kd"
   } else if (attr(x, "type") == "Synthesis") {
     func <- fitSynNLS
-    names(par.init) <- gsub("k", "ks", names(par.init))
-    names(par.lower) <- gsub("k", "ks", names(par.lower))
-    names(par.upper) <- gsub("k", "ks", names(par.upper))
+    names(par.init)[names(par.init) == "k"] <- "ks"
+    names(par.lower)[names(par.lower) == "k"] <- "ks"
+    names(par.upper)[names(par.upper) == "k"] <- "ks"
   } else {
     stop("unknown type of fit.")
 

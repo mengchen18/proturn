@@ -48,7 +48,6 @@ server <- function(input, output, session) {
   
   
   # ==================== intermediate calculation =====================
-  
   timePointsSyn <- reactive({
     req(input$timePointsSyn)
     as.numeric(strsplit(input$timePointsSyn, ',')[[1]])
@@ -167,6 +166,7 @@ server <- function(input, output, session) {
                     pre.col = pre.col,
                     ncore = modinputNcore,
                     resultPath = figureFolder)
+  
   ###################### degradation #####################
   observeEvent(input$go, {
     req(deg())
