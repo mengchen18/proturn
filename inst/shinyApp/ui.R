@@ -4,24 +4,30 @@ ui <- shinyUI(
     sidebarPanel(
       tabsetPanel(
         tabPanel("General settings",
-                 fileInput("file", "Upload file",
-                           multiple=FALSE,
-                           accept = c('text/csv',
-                                      'text/comma-separated-values',
-                                      'text/tab-separated-values',
-                                      'text/plain',
-                                      '.csv',
-                                      '.tsv')),
+                 
+                 fluidRow(
+                   column(8, style='padding-top:10px;',
+                          fileInput("file", "Upload file",
+                                    multiple=FALSE,
+                                    accept = c('text/csv',
+                                               'text/comma-separated-values',
+                                               'text/tab-separated-values',
+                                               'text/plain',
+                                               '.csv',
+                                               '.tsv'))),
+                   column(4, style='padding-top:30px;',
+                          actionButton("exData", "Example data"))
+                 ),
                  selectizeInput("id.col", "ID column",
                                 choices=NULL, multiple=FALSE,
                                 options = list(placeholder = 'Waiting data ...')),
                  selectizeInput("collapse.col", "Collapse on column",
-                                choices=NULL, multiple=TRUE,
+                                choices=NULL, multiple=FALSE,
                                 options=list(placeholder = "waiting data ...")),
                  selectizeInput("export.col", "Export columns",
                                 choices=NULL, multiple=TRUE,
                                 options=list(placeholder = "waiting data ...")),
-                 sliderInput("ncore", "Number of cores to use", 1, min(20, detectCores()), value = 4)
+                 sliderInput("ncore", "Number of cores to use", 1, max(1, detectCores()-2), value = 1)
         ),
         tabPanel("Model parameters",
                  p("This application using nonlinear least square method

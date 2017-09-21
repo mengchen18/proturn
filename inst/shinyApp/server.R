@@ -1,10 +1,21 @@
 server <- function(input, output, session) {
   # figureFolder = get("path", .__shiny.var__)
   figureFolder = "/media/msdata5/users_files/Chen/Projects/ProteinTurnOverRate/"
+  
   # ============== Update inputs ===================
-  dataInput <- reactive({
+  
+  fpath <- reactiveValues(path = NULL)
+  observeEvent(input$exData, {
+    fpath$path <- system.file("example.data.txt", package = "proturn")
+  })
+  observeEvent(input$file, {
     req(input$file)
-    data <- read.delim(input$file$datapath, as.is = TRUE, header = TRUE)
+    fpath$path <- input$file$datapath
+  })
+  
+  dataInput <- reactive({
+    req(fpath$path)
+    data <- read.delim(fpath$path, as.is = TRUE, header = TRUE)
     header <- colnames(data)
     headerNum <- header[sapply(data, is.numeric)]
     list(data=data, header=header, headerNum=headerNum)
