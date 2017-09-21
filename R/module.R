@@ -50,7 +50,8 @@ fmod <- function(input, output, session, x, tcc = reactive(Inf), f, time, type, 
                   selection = "single", options = list(scrollX = TRUE, autoWidth = TRUE),
                   rownames= FALSE)
   }, server = TRUE)
-
+  outputOptions(output, "tab", suspendWhenHidden = FALSE)
+  
   output$downloadData <- downloadHandler(
     filename = function() {
       paste("data-", Sys.Date(), ".txt", sep="")
@@ -145,7 +146,7 @@ fmod <- function(input, output, session, x, tcc = reactive(Inf), f, time, type, 
   })
 
   observeEvent(input$save2folder, {
-    withProgress(message = "making plot", value = 0, {
+    withProgress(message = "making plots", value = 0, {
       unif <- unique(r()$mat[, 1])
       n <- length(unif)
       dir <- file.path(resultPath, gsub("-| |:|", "", Sys.time()))
@@ -259,13 +260,14 @@ combView <- function(input, output, session, deg, syn,
                   selection = "single", options = list(scrollX = TRUE, autoWidth = TRUE),
                   rownames= FALSE)
   }, server = TRUE)
+  outputOptions(output, "tab", suspendWhenHidden = FALSE)
 
   output$figInd <- renderPlot({
     req(input$tab_rows_selected)
     i <- input$tab_rows_selected
     req(syn()$mat[i, "B"])
     req(syn()$mat[i, "A"])
-    req(deg()$mat[i, "ks"])
+    req(syn()$mat[i, "ks"])
     req(deg()$mat[i, "B"])
     req(deg()$mat[i, "A"])
     req(deg()$mat[i, "kd"])

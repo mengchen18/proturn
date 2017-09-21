@@ -1,8 +1,8 @@
 Package: proturn
 Type: Package
 Title: Mass spectrometry based protein turnover curve fitting
-Version: 0.1.5
-Date: 2017-09-20
+Version: 0.1.6
+Date: 2017-09-21
 Author: Chen Meng
 Maintainer: Chen Meng <mengchen18@gmail.com>
 Description: Describe what the package does, some text from Jana.
