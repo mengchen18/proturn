@@ -1,0 +1,30 @@
+Package: proturn
+Type: Package
+Title: Mass spectrometry based protein turnover curve fitting
+Version: 0.1.5
+Date: 2017-09-20
+Author: Chen Meng
+Maintainer: Chen Meng <mengchen18@gmail.com>
+Description: Describe what the package does, some text from Jana.
+License: GPL-2
+Depends:
+    R (>= 3.3.0), shinyBS, parallel
+Imports:
+   methods, matrixStats, graphics, stats, shiny, DT, grDevices, utils
+VignetteBuilder: knitr
+Suggests:
+    BiocStyle, knitr, rmarkdown
+biocViews: Software, Proteomics, GUI, MassSpectrometry
+NeedsCompilation: no
+RoxygenNote: 6.0.1
+Collate: 
+    'ZZZ_functionsFitting_LM.R'
+    'ZZZ_uniTest.R'
+    'collapseIntensity.R'
+    'functionSynFitting.R'
+    'functionsDegFitting.R'
+    'functionsFitting.R'
+    'functionsSimPlot.R'
+    'runShiny.R'
+    'module.R'
+    'refitwoOutlier.R'

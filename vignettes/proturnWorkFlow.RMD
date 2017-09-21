@@ -1,0 +1,78 @@
+---
+title: "Fitting mass spectrometry-based protein degradation or synthesis curve using 'proturn'"
+author: "Chen Meng"
+date: "9/20/2017"
+output: 
+  BiocStyle::html_document2
+vignette: >
+  %\VignetteIndexEntry{Fitting mass spectrometry-based protein degradation or synthesis curve using 'proturn'}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+Mainly about TMT-pulse silac approach, experimental setups.
+
+The models to be fitted
+
+this package use NLS algorithm to fit models
+
+The aim of this package is to provide biolgist a quick way to look at these experimental setup. 
+
+
+```{r cars}
+summary(cars)
+```
+
+
+# Workflow
+First we need to load the package and example data included in the package as following:
+```{r loadingPackageData}
+library("proturn")
+dat <- read.delim(system.file("example.data.txt", package = "proturn"))
+# rows are peptides
+colnames(dat)
+```
+\Robject{Dat} is \Rclass{data.frame} with 100 row and 30 columns. 
+
+## fit a single degradation/synthesis curve
+To fit a single degradation or synthesis curve, 
+
+In this example, we fit a synthis
+
+```{r singleFit, echo=FALSE}
+# fit a signle synthesis curve for the first peptide
+timepoints <- c(0, 1, 2, 4, 8, 16, 24, 32, 48, 64)
+rat <- unlist(dat[1, grep("syn$", colnames(dat))])
+plot(timepoints, rat)
+# fit synthesis curve, assume cell is in a stady state, i.e. no proliferation. 
+fit <- fitSynNLS(x=rat, t = timepoints, tcc = Inf)
+plotCurve.one(x = fit, t = timepoints, tcc = Inf)
+```
+
+## Using a matrix to fit a curve
+a matrix input
+
+## Fitting all curves
+an MS experiment, and fit all curves
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+# shiny application
+The package also include a shiny application, to start the app:
+```{r app, eval=FALSE}
+runShiny()
+```
+
+# Note on data normalization
+some normalization suggestions
+
+# Session
+```{r sess}
+sessionInfo()
+```
