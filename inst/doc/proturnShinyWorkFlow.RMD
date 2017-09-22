@@ -1,0 +1,34 @@
+---
+title: "Shiny tutorial - Fitting protein degradation or synthesis curve using 'proturn'"
+author: "Chen Meng"
+date: "9/20/2017"
+output: 
+  BiocStyle::html_document2
+vignette: >
+  %\VignetteIndexEntry{Shiny tutorial - Fitting protein degradation or synthesis curve using 'proturn'}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Abstract
+
+Pulse-SILAC has been used to analyze protein turnover from a system wise. 
+This package provides convenient functions to fit protein degradation and synthesis curves
+using pulsed SILAC data.
+In addition, a graphical user interface is provided for biologists.
+
+# General settings
+
+# Parameter setting
+
+# Result panel
+
+## Synthesis curve
+
+## Degradation curve
+
+## Synthesis and degradation together
+

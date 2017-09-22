@@ -8,7 +8,7 @@ Maintainer: Chen Meng <mengchen18@gmail.com>
 Description: Describe what the package does, some text from Jana.
 License: GPL-2
 Depends:
-    R (>= 3.3.0), shinyBS, parallel
+    R (>= 3.4.0), shinyBS, parallel
 Imports:
    methods, matrixStats, graphics, stats, shiny, DT, grDevices, utils
 VignetteBuilder: knitr
