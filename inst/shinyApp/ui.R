@@ -27,7 +27,7 @@ ui <- shinyUI(
                  selectizeInput("export.col", "Export columns",
                                 choices=NULL, multiple=TRUE,
                                 options=list(placeholder = "waiting data ...")),
-                 sliderInput("ncore", "Number of cores to use", 1, max(1, detectCores()-2), value = 1)
+                 sliderInput("ncore", "Number of cores to use", 1, max(1, detectCores()-2), value = 1, step = 1)
         ),
         tabPanel("Model parameters",
                  p("This application using nonlinear least square method
