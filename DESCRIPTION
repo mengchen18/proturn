@@ -17,14 +17,3 @@ Suggests:
 biocViews: Software, Proteomics, GUI, MassSpectrometry
 NeedsCompilation: no
 RoxygenNote: 6.0.1
-Collate: 
-    'ZZZ_functionsFitting_LM.R'
-    'ZZZ_uniTest.R'
-    'collapseIntensity.R'
-    'functionSynFitting.R'
-    'functionsDegFitting.R'
-    'functionsFitting.R'
-    'functionsSimPlot.R'
-    'runShiny.R'
-    'module.R'
-    'refitwoOutlier.R'
