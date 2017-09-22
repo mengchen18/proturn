@@ -1,7 +1,7 @@
 ---
 title: "Fitting protein degradation or synthesis curve using 'proturn'"
 author: "Chen Meng"
-date: "9/20/2017"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
   BiocStyle::html_document2
 vignette: >

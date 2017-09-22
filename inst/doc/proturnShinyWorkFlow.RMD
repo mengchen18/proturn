@@ -1,9 +1,9 @@
 ---
 title: "Shiny tutorial - Fitting protein degradation or synthesis curve using 'proturn'"
 author: "Chen Meng"
-date: "9/20/2017"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
-  BiocStyle::html_document2
+  html_document
 vignette: >
   %\VignetteIndexEntry{Shiny tutorial - Fitting protein degradation or synthesis curve using 'proturn'}
   %\VignetteEngine{knitr::rmarkdown}
@@ -13,22 +13,42 @@ vignette: >
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-# Abstract
 
-Pulse-SILAC has been used to analyze protein turnover from a system wise. 
-This package provides convenient functions to fit protein degradation and synthesis curves
-using pulsed SILAC data.
-In addition, a graphical user interface is provided for biologists.
+------
 
-# General settings
+##### NOTE: This tutorial is only for the user interface of shiny app. To understand the parameters you need to specify in this app, you need to read (a link to the other vignette).
 
-# Parameter setting
+-----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 
-# Result panel
+![Uploading data](slide1.jpg)
 
-## Synthesis curve
+-----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 
-## Degradation curve
+![General setting](slide2.jpg)
 
-## Synthesis and degradation together
+-----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 
+![Model parameters](slide3.jpg)
+
+-----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+
+![Fitting degradation curve](slide4.jpg)
+
+-----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+
+![User interface of degradation curve fitting](slide5.jpg)
+
+-----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+
+![Excluding outliers dynamically](slide6.jpg)
+
+-----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+
+![Fitting synthesis curves and comparison of synthesis and degradation results](slide7.jpg)
