@@ -1,6 +1,8 @@
-#' @title Using subset of rows to refit NLS model
-#' @description Used by shinyapp.
-#' @param x an element in "list" returned by \code{\link{fitNLSModels}}
+#' @title Using subset of rows in a matrix to refit NLS model
+#' @description Given an output of \code{\link{fitNLSModels}}, using a 
+#'   subset of rows in the original matrix to fit a new NLS model. 
+#'   This functional is used by shinyapp, not for users. 
+#' @param x a model (i.e. an element of \code{list}) returned by \code{\link{fitNLSModels}}
 #' @param include which rows should be included
 #' @param k the synthesis/degradation constant
 #' @param t The time point (hours)
@@ -21,8 +23,8 @@
 #'  mean square error and r-square values.
 #'  In addition, if individual rows are fitted, the object also contains an attribute stores
 #'  parameters fitted on each individual row.
-#' @export
-#' @keywords internal
+##' @export
+##' @keywords internal
 #'
 #' @examples
 #' tp <- c(0, 1, 2, 4, 8, 16, 32, 64)

@@ -1,12 +1,17 @@
-#' @title Fitting protein degradation/synthesis curves using nonlinear least square methods (NLS)
-#' @description Main function of the package, this function should be directly called by users to fit
-#'   protein degradation curves using nonlinear least square methods (NLS)
-#' @param x A numeric vector
-#' @param f A factor or vector, which length should be the same as the number of row in x.
-#'   It is possible to fit a single model using multiple lines, for example, when multiple lines are from the
-#'   peptide or protein.
+#' @title Fitting protein degradation/synthesis curves using nonlinear 
+#'   least square methods (NLS)
+#' @description Main function to be called by users to fit
+#'   protein degradation or synthesis curves using 
+#'   nonlinear least square methods (NLS).
+#' @param x A numeric matrix where rows are variables (e.g. peptides or proteins)
+#'   and columns are different time points.
+#' @param f A factor or vector, its length should be the same as the number of 
+#'   rows in \code{x}. It is possible to fit a single model using multiple lines, this is 
+#'   useful, for example, when multiple lines are from the peptide or protein. This
+#'   is implemented by multiple rows in \code{x} corresponds to the same with in \code{f}.
 #' @param t The time point (hours)
-#' @param tcc The doubling time of cells. By default this value is Inf, which means the cells are in steady state
+#' @param tcc The doubling time of cells. By default this value is Inf, 
+#'   which means the cells are in steady state. 
 #' @param type which curve should be fitted, should be either "deg" (degradation curve) or "syn" (synthesis curve)
 #' @param A optinal argument for fixed A, if this argument is given, "A" won't be optimized
 #' @param B optional argument for fixed B, if this argument is given, "B" won't be optimized
@@ -33,7 +38,8 @@
 #' @export
 #' @examples
 #' tp <- c(0, 1, 2, 4, 8, 16, 32, 64)
-#' A <- runif(5, min = 0.75, max = 0.95)
+#' A <- runif(5, m                                         
+  n 
 #' B <- runif(5, min = 0.1, max = 0.15)
 #' kd <- runif(5, min = 0.05, max = 0.1)
 #' ds <- mapply(function(A, B, kd) {

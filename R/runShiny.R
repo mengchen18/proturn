@@ -2,7 +2,7 @@
 #' @description Lanch shiny application for protein degradation/synthesis curve fitting
 #' @param maxFileSize max size of files can be uploaded
 #' @param figureFolder a character string to specify a directory where the figures to be saved
-#' @return A shiny application will be launched, not values to be returned
+#' @return A shiny application will be launched
 #' @export
 #' @importFrom parallel mclapply
 #' @examples 

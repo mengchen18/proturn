@@ -1,15 +1,22 @@
-#' @title Collapse intensity
-#' @description Collpase intensity to peptide or protein level
-#' @param x a \code{data.frame} containing at least the intensity columns and a column according to which
-#'   intensities are collapsed
-#' @param intensity.col the column of intensities, could be either column name or column index
-#' @param collapse.col the column accroding to which intensity are collapsed
-#' @param annot.col the annotation columns, which will be retained in the output
-#' @param n.cores the number of cores to be used, it is passed to mclapply function
+#' @title Collapse rows of an intensity matrix according to a vector/factor
+#' @description Collapse rows of an intensity matrix according to a vector/factor. 
+#' @param x a \code{data.frame} containing at least the intensity columns and 
+#'   a column according to which intensities are collapsed.
+#' @param intensity.col the columns of intensities, could be either column names
+#'   or column indices
+#' @param collapse.col the column accroding to which intensity are collapsed. Most of 
+#'   the cases, this column should be peptide sequences or protein IDs, see \code{details}. 
+#' @param annot.col the annotation columns, which will be retained in the output. 
+#' @param n.cores the number of cores to be used, it is passed to \code{mclapply}
 #' @param collapse.method the collapse method, see \code{details} section.
-#' @details This function prepare input for \code{\link{fitDegNLS}}. Two typical usages are: 2) collapse identical
-#'   peptides, here the peptide sequence should be used as collapse column; 2) collapse from peptide level to protein
-#'   levels, so the protein name or ID could be used as collapse column. The following collapse methods are avaliable:
+#' @details This function prepares input for \code{\link{fitDegNLS}}. Two typical 
+#'   usages are: 1) collapse intensitys on peptide level, i.e. if multiple rows 
+#'   corresponds to identical peptide, combine them into one rows in some way (see below).
+#'   In this case, the peptide sequence should be used as \code{collapse.col}. 
+#'   2) collapse from peptide level to protein levels, so the protein name or 
+#'   ID could be used as \code{collapse.col}. 
+#'   
+#'   The following collapse methods are avaliable:
 #'   \itemize{
 #'     \item sum sum the intensities;
 #'     \item mean mean of intensities;

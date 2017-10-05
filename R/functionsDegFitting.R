@@ -1,28 +1,33 @@
-#' @title Fitting degration curve using NLS algorithm
-#' @description fitting degration curve using NLS algorithm
-#' @param x a numeric matrix or vector
+#' @title Fitting protein degradation curve using NLS algorithm
+#' @description Fitting protein degradation curve using NLS algorithm
+#' @param x a numeric matrix or vector. If x is a matrix, the rows are variables 
+#'   (e.g. peptides, proteins) and columns are different time points.
 #' @param ... other arguments
-#' @param t The time point (hours)
-#' @param tcc The doubling time of cells. By default this value is Inf, which means the cells are in steady state
-#' @param A optinal argument for fixed A, if this argument is given, "A" won't be optimized
-#' @param B optional argument for fixed B, if this argument is given, "B" won't be optimized
-#' @param kd optional argument for fixed kd, if this argument is given, "ks" won't be optimized
-#' @param par.init The initial values of parameters to be optimized, it should be list of three elements
-#'   names as "A", "B" and "kd".
-#' @param par.lower The lower boundary of parameters to be optimized, it should be a numeric values with
-#'   length 3 and named as "A", "B" and "kd".
-#' @param par.upper The upper boundary of parameters to be optimized, it should be a numeric values with
-#'   length 3 and named as "A", "B" and "kd".
-#' @param message A logical value to indicated if any message should be printed
-#' @param fitIndividual A logical value, whether each individual row should also be fitted.
-#'   Only used when x is an object of class \code{matrix}
-#' @param kd2ks Should not be changed by user. A logical value, whether should be transformed to
-#'   fit synthesis curve.
+#' @param t The time points given in HOURS.
+#' @param tcc The doubling time of cells (hours). By default this value is Inf, 
+#'   which means the cells are in steady state, no proliferation.
+#' @param A optinal argument for pre-spicified A, if this argument is given, "A" 
+#'   won't be optimized.
+#' @param B optional argument for pre-spicified B, if this argument is given, 
+#'   "B" won't be optimized.
+#' @param kd optional argument for pre-spicified kd, if this argument is given, 
+#'   "kd" won't be optimized.
+#' @param par.init The initial values of parameters to be optimized, it should 
+#'   be list of three elements names as "A", "B" and "kd".
+#' @param par.lower The lower boundary of parameters to be optimized, it should 
+#'   be a numeric values with 3 elements named as "A", "B" and "kd".
+#' @param par.upper The upper boundary of parameters to be optimized, it should 
+#'   be a numeric values with 3 elements named as "A", "B" and "kd".
+#' @param message A logical value to indicate if any messages should be printed
+#' @param fitIndividual A logical value, whether each individual row should also 
+#'   be fitted. Only used when \code{x} is an object of class \code{matrix}.
+#' @param kd2ks Should not be changed by user. A logical value, whether the input
+#'   should be converted to fit synthesis curve.
 #' @return
-#'  a vector of optimized parameters, including A, B, kd, confidence intervals (2.5% and 97.5%),
-#'  mean square error and r-square values.
-#'  In addition, if individual rows are fitted, the object also contains an attribute stores
-#'  parameters fitted on each individual row.
+#'  a vector of optimized parameters, including A, B, kd, confidence intervals 
+#'  (2.5% and 97.5%), mean square error and r-square values.
+#'  In addition, if individual rows are fitted, the object also contains an 
+#'  attribute stores parameters fitted on each individual row.
 #' @export
 #' @import methods stats
 #' @examples
@@ -118,10 +123,7 @@ setMethod(
         res <- coef(fit)
         alg <- paste("port", fit$convInfo$stopMessage)
       }
-      # }
-      #
-      #
-      # if (inherits(fit, "nls")) {
+
       mse <- try(mean(residuals(fit)^2), silent = TRUE)
       if (!is.numeric(mse)) {
         mse <- NA
