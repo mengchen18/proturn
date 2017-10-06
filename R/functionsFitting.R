@@ -38,8 +38,7 @@
 #' @export
 #' @examples
 #' tp <- c(0, 1, 2, 4, 8, 16, 32, 64)
-#' A <- runif(5, m                                         
-  n 
+#' A <- runif(5, min = 0.75, max = 0.95)
 #' B <- runif(5, min = 0.1, max = 0.15)
 #' kd <- runif(5, min = 0.05, max = 0.1)
 #' ds <- mapply(function(A, B, kd) {

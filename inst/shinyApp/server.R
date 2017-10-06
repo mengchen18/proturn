@@ -188,10 +188,10 @@ server <- function(input, output, session) {
                tcc = modinputTcc)
   })
   
-  session$onSessionEnded(function() {
-    if (exists(".__proturn.shiny.var__", globalenv()))
-      rm(.__proturn.shiny.var__, envir = globalenv())
-  })
+  # session$onSessionEnded(function() {
+  #   if (exists(".__proturn.shiny.var__", globalenv()))
+  #     rm(.__proturn.shiny.var__, envir = globalenv())
+  # })
 }
 
 

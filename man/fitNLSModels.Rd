@@ -2,22 +2,26 @@
 % Please edit documentation in R/functionsFitting.R
 \name{fitNLSModels}
 \alias{fitNLSModels}
-\title{Fitting protein degradation/synthesis curves using nonlinear least square methods (NLS)}
+\title{Fitting protein degradation/synthesis curves using nonlinear 
+  least square methods (NLS)}
 \usage{
 fitNLSModels(x, f, t, tcc = Inf, type = c("deg", "syn"), A = NULL,
   B = NULL, par.init = list(A = 0.9, B = 0.1, k = 0.04), par.lower = c(A =
   0, B = 0, k = 0), par.upper = c(A = 1, B = 1, k = 10), ncore = 1)
 }
 \arguments{
-\item{x}{A numeric vector}
+\item{x}{A numeric matrix where rows are variables (e.g. peptides or proteins)
+and columns are different time points.}
 
-\item{f}{A factor or vector, which length should be the same as the number of row in x.
-It is possible to fit a single model using multiple lines, for example, when multiple lines are from the
-peptide or protein.}
+\item{f}{A factor or vector, its length should be the same as the number of 
+rows in \code{x}. It is possible to fit a single model using multiple lines, this is 
+useful, for example, when multiple lines are from the peptide or protein. This
+is implemented by multiple rows in \code{x} corresponds to the same with in \code{f}.}
 
 \item{t}{The time point (hours)}
 
-\item{tcc}{The doubling time of cells. By default this value is Inf, which means the cells are in steady state}
+\item{tcc}{The doubling time of cells. By default this value is Inf, 
+which means the cells are in steady state.}
 
 \item{type}{which curve should be fitted, should be either "deg" (degradation curve) or "syn" (synthesis curve)}
 
@@ -45,8 +49,9 @@ A list of three elmenets
   }
 }
 \description{
-Main function of the package, this function should be directly called by users to fit
-  protein degradation curves using nonlinear least square methods (NLS)
+Main function to be called by users to fit
+  protein degradation or synthesis curves using 
+  nonlinear least square methods (NLS).
 }
 \details{
 The function fit the following models:

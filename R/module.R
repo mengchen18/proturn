@@ -92,7 +92,7 @@ fmod <- function(input, output, session, x, tcc = reactive(Inf), f, time, type, 
         if (any(iir)) {
           isolate({
             updateOutlierBox <- FALSE
-            combList  <- proturn:::refitwoOutlier(
+            combList  <- refitwoOutlier(
               x = combList, include = iir,
               t = time(), A = A(), B = B(), tcc = tcc(), par.init = par.init(),
               par.lower = par.lower(), par.upper = par.upper() )

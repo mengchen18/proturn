@@ -5,7 +5,7 @@
 \alias{fitDegNLS}
 \alias{fitDegNLS,vector-method}
 \alias{fitDegNLS,matrix-method}
-\title{Fitting degration curve using NLS algorithm}
+\title{Fitting protein degradation curve using NLS algorithm}
 \usage{
 fitDegNLS(x, ...)
 
@@ -20,45 +20,50 @@ fitDegNLS(x, ...)
   = 10), message = TRUE, kd2ks = FALSE)
 }
 \arguments{
-\item{x}{a numeric matrix or vector}
+\item{x}{a numeric matrix or vector. If x is a matrix, the rows are variables 
+(e.g. peptides, proteins) and columns are different time points.}
 
 \item{...}{other arguments}
 
-\item{t}{The time point (hours)}
+\item{t}{The time points given in HOURS.}
 
-\item{tcc}{The doubling time of cells. By default this value is Inf, which means the cells are in steady state}
+\item{tcc}{The doubling time of cells (hours). By default this value is Inf, 
+which means the cells are in steady state, no proliferation.}
 
-\item{A}{optinal argument for fixed A, if this argument is given, "A" won't be optimized}
+\item{A}{optinal argument for pre-spicified A, if this argument is given, "A" 
+won't be optimized.}
 
-\item{B}{optional argument for fixed B, if this argument is given, "B" won't be optimized}
+\item{B}{optional argument for pre-spicified B, if this argument is given, 
+"B" won't be optimized.}
 
-\item{kd}{optional argument for fixed kd, if this argument is given, "ks" won't be optimized}
+\item{kd}{optional argument for pre-spicified kd, if this argument is given, 
+"kd" won't be optimized.}
 
-\item{par.init}{The initial values of parameters to be optimized, it should be list of three elements
-names as "A", "B" and "kd".}
+\item{par.init}{The initial values of parameters to be optimized, it should 
+be list of three elements names as "A", "B" and "kd".}
 
-\item{par.lower}{The lower boundary of parameters to be optimized, it should be a numeric values with
-length 3 and named as "A", "B" and "kd".}
+\item{par.lower}{The lower boundary of parameters to be optimized, it should 
+be a numeric values with 3 elements named as "A", "B" and "kd".}
 
-\item{par.upper}{The upper boundary of parameters to be optimized, it should be a numeric values with
-length 3 and named as "A", "B" and "kd".}
+\item{par.upper}{The upper boundary of parameters to be optimized, it should 
+be a numeric values with 3 elements named as "A", "B" and "kd".}
 
-\item{message}{A logical value to indicated if any message should be printed}
+\item{message}{A logical value to indicate if any messages should be printed}
 
-\item{kd2ks}{Should not be changed by user. A logical value, whether should be transformed to
-fit synthesis curve.}
+\item{kd2ks}{Should not be changed by user. A logical value, whether the input
+should be converted to fit synthesis curve.}
 
-\item{fitIndividual}{A logical value, whether each individual row should also be fitted.
-Only used when x is an object of class \code{matrix}}
+\item{fitIndividual}{A logical value, whether each individual row should also 
+be fitted. Only used when \code{x} is an object of class \code{matrix}.}
 }
 \value{
-a vector of optimized parameters, including A, B, kd, confidence intervals (2.5% and 97.5%),
- mean square error and r-square values.
- In addition, if individual rows are fitted, the object also contains an attribute stores
- parameters fitted on each individual row.
+a vector of optimized parameters, including A, B, kd, confidence intervals 
+ (2.5% and 97.5%), mean square error and r-square values.
+ In addition, if individual rows are fitted, the object also contains an 
+ attribute stores parameters fitted on each individual row.
 }
 \description{
-fitting degration curve using NLS algorithm
+Fitting protein degradation curve using NLS algorithm
 }
 \section{Methods (by class)}{
 \itemize{

@@ -1,11 +1,13 @@
 Package: proturn
 Type: Package
-Title: Mass spectrometry based protein turnover curve fitting
-Version: 0.2.0
-Date: 2017-09-21
+Title: System-wise protein turnover curve fitting
+Version: 0.99.0
+Date: 2017-10-06
 Author: Chen Meng
 Maintainer: Chen Meng <mengchen18@gmail.com>
-Description: Describe what the package does, some text from Jana.
+Description: Pulse-SILAC has been used to analyze protein turnover in a system-wise. 
+  This package provides convenient functions to fit protein degradation and synthesis curves
+  using pulsed SILAC data. In addition, a graphical user interface is provided.
 License: GPL-2
 Depends:
     R (>= 3.4.0), shinyBS, parallel
@@ -17,3 +19,12 @@ Suggests:
 biocViews: Software, Proteomics, GUI, MassSpectrometry
 NeedsCompilation: no
 RoxygenNote: 6.0.1
+Collate: 
+    'collapseIntensity.R'
+    'functionSynFitting.R'
+    'functionsDegFitting.R'
+    'functionsFitting.R'
+    'functionsSimPlot.R'
+    'runShiny.R'
+    'module.R'
+    'refitwoOutlier.R'

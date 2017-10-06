@@ -2,7 +2,7 @@
 % Please edit documentation in R/refitwoOutlier.R
 \name{refitwoOutlier}
 \alias{refitwoOutlier}
-\title{Using subset of rows to refit NLS model}
+\title{Using subset of rows in a matrix to refit NLS model}
 \usage{
 refitwoOutlier(x, include, t, tcc, A = NULL, B = NULL, k = NULL,
   par.init = list(A = 1, B = 0.2, k = 0.04), par.lower = c(A = 0, B = 0, k =
@@ -10,7 +10,7 @@ refitwoOutlier(x, include, t, tcc, A = NULL, B = NULL, k = NULL,
   message = TRUE)
 }
 \arguments{
-\item{x}{an element in "list" returned by \code{\link{fitNLSModels}}}
+\item{x}{a model (i.e. an element of \code{list}) returned by \code{\link{fitNLSModels}}}
 
 \item{include}{which rows should be included}
 
@@ -45,7 +45,9 @@ a vector of optimized parameters, including A, B, kd, confidence intervals (2.5%
  parameters fitted on each individual row.
 }
 \description{
-Used by shinyapp.
+Given an output of \code{\link{fitNLSModels}}, using a 
+  subset of rows in the original matrix to fit a new NLS model. 
+  This functional is used by shinyapp, not for users.
 }
 \examples{
 tp <- c(0, 1, 2, 4, 8, 16, 32, 64)

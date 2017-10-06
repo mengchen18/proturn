@@ -2,23 +2,25 @@
 % Please edit documentation in R/collapseIntensity.R
 \name{collapseIntesity}
 \alias{collapseIntesity}
-\title{Collapse intensity}
+\title{Collapse rows of an intensity matrix according to a vector/factor}
 \usage{
 collapseIntesity(x, intensity.col, collapse.col = "Sequence", annot.col,
   n.cores = 1, collapse.method = c("sum", "mean", "median", "max.range",
   "max.range01")[1])
 }
 \arguments{
-\item{x}{a \code{data.frame} containing at least the intensity columns and a column according to which
-intensities are collapsed}
+\item{x}{a \code{data.frame} containing at least the intensity columns and 
+a column according to which intensities are collapsed.}
 
-\item{intensity.col}{the column of intensities, could be either column name or column index}
+\item{intensity.col}{the columns of intensities, could be either column names
+or column indices}
 
-\item{collapse.col}{the column accroding to which intensity are collapsed}
+\item{collapse.col}{the column accroding to which intensity are collapsed. Most of 
+the cases, this column should be peptide sequences or protein IDs, see \code{details}.}
 
-\item{annot.col}{the annotation columns, which will be retained in the output}
+\item{annot.col}{the annotation columns, which will be retained in the output.}
 
-\item{n.cores}{the number of cores to be used, it is passed to mclapply function}
+\item{n.cores}{the number of cores to be used, it is passed to \code{mclapply}}
 
 \item{collapse.method}{the collapse method, see \code{details} section.}
 }
@@ -26,12 +28,17 @@ intensities are collapsed}
 a \code{data.frame} of collapsed intensities, containing the collapsed.col, intensity.col and annot.cols.
 }
 \description{
-Collpase intensity to peptide or protein level
+Collapse rows of an intensity matrix according to a vector/factor.
 }
 \details{
-This function prepare input for \code{\link{fitDegNLS}}. Two typical usages are: 2) collapse identical
-  peptides, here the peptide sequence should be used as collapse column; 2) collapse from peptide level to protein
-  levels, so the protein name or ID could be used as collapse column. The following collapse methods are avaliable:
+This function prepares input for \code{\link{fitDegNLS}}. Two typical 
+  usages are: 1) collapse intensitys on peptide level, i.e. if multiple rows 
+  corresponds to identical peptide, combine them into one rows in some way (see below).
+  In this case, the peptide sequence should be used as \code{collapse.col}. 
+  2) collapse from peptide level to protein levels, so the protein name or 
+  ID could be used as \code{collapse.col}. 
+  
+  The following collapse methods are avaliable:
   \itemize{
     \item sum sum the intensities;
     \item mean mean of intensities;

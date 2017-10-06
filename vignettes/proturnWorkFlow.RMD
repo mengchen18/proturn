@@ -15,25 +15,31 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 # Abstract
 
-Pulse-SILAC has been used to analyze protein turnover from a system wise. 
-This package provides convenient functions to fit protein degradation and synthesis curves
-using pulsed SILAC data.
-In addition, a graphical user interface is provided for biologists.
+Pulse-SILAC has been used to analyze protein turnover in a system-wise. This package 
+provides convenient functions to fit protein degradation and synthesis curves
+using pulsed SILAC data. In addition, a graphical user interface is provided.
 
 # Introduction
 
-Introduction about the (TMT-)pulse SILAC approach, experimental setups and output.
-![pSILAC workflow](pSILAC.jpg)
-
-
-The package provides functions using nonlinear least square (NLS) method to fit protein turnover curves. For the degradation curve, the following model is fitted:
+Pulsed (or time resolved) SILAC experiments have been successfully applied to
+proteome-wise study of protein turnover rate [citecite]. In a simple experimental setup,
+initially all proteins in a cell population are completely (heavy) labeled, then 
+the culture medium is changed from heavy to light (unlabeled) so the newly synthesis 
+proteins would contain only the light (unlabeled) amino acids. After a long time of 
+culturing, all the proteins in the population would become light labelled. In order to quantify 
+protein degradation rate, the amount of heavy labelled proteins at different time points 
+are compared with heavy labelled proteins at time point 0 (before changing medium). 
+As a result, the proportion of undegradated proteins is available at different time points, which
+could be used to fit models to calculate protein degradation constant and other parameters. 
+This package provides functions fitting protein turnover curves using nonlinear least square (NLS) 
+methods. For the degradation curve, the following model is fitted:
 
 $$ f(t) = (A-B) \cdot e^{-(k_d + \frac{ln2}{t_{cc}}) \cdot t} + B$$
 The synthesis curve, the fitted model is:
 $$ f(t) = (B-A) \cdot e^{-(k_s + \frac{ln2}{t_{cc}}) \cdot t} + A $$
 where $k_d$ and $k_s$ are the degradation and synthesis constant respectively, which are going to be estimated. The $t$ is the time points given in hours and $t_{cc}$ is the cell doubling time. With the assumption of steady state (no proliferation), this parameter is set to infinite (`Inf`). In addition, two other parameters are included: $A$ is the (normalized) amplitude, $B$ accounting for the offset seen in data, which could be attributed by the recycling of amino acids in protein synthesis.
 
-# Data normalization
+# Data preparation
 The data is assumed to be properly normalized and transform to the ratios, that is, at a specific time point, the proportion of newly synthesized protein (for synthesis curve fitting) or remained protein (for degradation curve fitting). 
 The package is primarily designed for the pSILAC data, but it can also be used to any data transformed to this format. 
 

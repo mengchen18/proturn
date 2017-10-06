@@ -12,7 +12,7 @@ runShiny(maxFileSize = 100 * 1024^2, figureFolder = getwd())
 \item{figureFolder}{a character string to specify a directory where the figures to be saved}
 }
 \value{
-A shiny application will be launched, not values to be returned
+A shiny application will be launched
 }
 \description{
 Lanch shiny application for protein degradation/synthesis curve fitting
