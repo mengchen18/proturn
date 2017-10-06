@@ -22,7 +22,8 @@ using pulsed SILAC data. In addition, a graphical user interface is provided.
 # Introduction
 
 Pulsed (or time resolved) SILAC experiments have been successfully applied to
-proteome-wise study of protein turnover rate [citecite]. In a simple experimental setup,
+proteome-wise study of protein turnover rate ^[Boisvert, François-Michel, Yasmeen Ahmad, Marek Gierliński, Fabien Charrière, Douglas Lamont, Michelle Scott, Geoff Barton, and Angus I. Lamond. 2012. “A Quantitative Spatial Proteomics Analysis of Proteome Turnover in Human Cells.” Molecular & Cellular Proteomics: MCP 11 (3): M111.011429.]. 
+In a simple experimental setup,
 initially all proteins in a cell population are completely (heavy) labeled, then 
 the culture medium is changed from heavy to light (unlabeled) so the newly synthesis 
 proteins would contain only the light (unlabeled) amino acids. After a long time of 
@@ -122,7 +123,7 @@ Two arguments could be specified:
 * *figureFolder* If you want to visually check all the curves, it's more convenient to save them on your disk. This 
 argument gives a control on where you want to save all the figures. 
 
-An instruction about how to use the shiny app could be find [here][shinyintro]^[yet to be ready].
+An instruction about how to use the shiny app could be find [here][shinyintro]^[update link].
 
 
 # Session info {.unnumbered}

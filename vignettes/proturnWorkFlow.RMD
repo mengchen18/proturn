@@ -22,7 +22,7 @@ using pulsed SILAC data. In addition, a graphical user interface is provided.
 # Introduction
 
 Pulsed (or time resolved) SILAC experiments have been successfully applied to
-proteome-wise study of protein turnover rate ^[Boisvert, François-Michel, Yasmeen Ahmad, Marek Gierliński, Fabien Charrière, Douglas Lamont, Michelle Scott, Geoff Barton, and Angus I. Lamond. 2012. “A Quantitative Spatial Proteomics Analysis of Proteome Turnover in Human Cells.” Molecular & Cellular Proteomics: MCP 11 (3): M111.011429.]. 
+proteome-wise study of protein turnover rate ^[Boisvert, François-Michel et.a l. 2012. “A Quantitative Spatial Proteomics Analysis of Proteome Turnover in Human Cells.” Molecular & Cellular Proteomics: MCP 11 (3): M111.011429.]. 
 In a simple experimental setup,
 initially all proteins in a cell population are completely (heavy) labeled, then 
 the culture medium is changed from heavy to light (unlabeled) so the newly synthesis 
@@ -30,7 +30,7 @@ proteins would contain only the light (unlabeled) amino acids. After a long time
 culturing, all the proteins in the population would become light labelled. In order to quantify 
 protein degradation rate, the amount of heavy labelled proteins at different time points 
 are compared with heavy labelled proteins at time point 0 (before changing medium). 
-As a result, the proportion of undegradated proteins is available at different time points, which
+As a result, the proportion of un-degraded proteins is available at different time points, which
 could be used to fit models to calculate protein degradation constant and other parameters. 
 This package provides functions fitting protein turnover curves using nonlinear least square (NLS) 
 methods. For the degradation curve, the following model is fitted:

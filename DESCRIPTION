@@ -3,7 +3,7 @@ Type: Package
 Title: System-wise protein turnover curve fitting
 Version: 0.99.0
 Date: 2017-10-06
-Author: Chen Meng
+Author: Chen Meng, Jana Zecha
 Maintainer: Chen Meng <mengchen18@gmail.com>
 Description: Pulse-SILAC has been used to analyze protein turnover in a system-wise. 
   This package provides convenient functions to fit protein degradation and synthesis curves
