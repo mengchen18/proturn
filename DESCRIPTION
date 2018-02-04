@@ -1,7 +1,7 @@
 Package: proturn
 Type: Package
 Title: System-wise protein turnover curve fitting
-Version: 0.99.0
+Version: 0.99.1
 Date: 2017-10-06
 Author: Chen Meng, Jana Zecha
 Maintainer: Chen Meng <mengchen18@gmail.com>
